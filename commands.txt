@@ -1,0 +1,64 @@
+#BACK
+python3 -m venv env
+source env/bin/activate
+pip install django
+django-admin startproject djchat
+pip install djangorestframework
+python manage.py runserver
+ctrl+C
+
+cd ../
+pip install python-dotenv
+cd djchat
+touch .env
+pip install black
+pip install flake8
+python  manage.py startapp server
+pip install pillow
+
+#FR
+npm create vite -> name(reactchat) -> React -> TS+SWC
+cd reactchat
+npm install
+npm run dev
+npm install react-router-dom
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm i axios
+pip install django-cors-headers
+
+#Create wirtual servrt on AWS commands
+clear
+sudo apt-get update
+sudo apt-get upgrade
+python3 --version
+sudo apt-get install python3-venv
+clear
+python3 -m venv env
+source env/bin/activate
+pip3 install django
+sudo apt-get install -y nginx
+pip install gunicorn
+pip list
+sudo apt-get install supervisor
+cd /etc/supervisor/conf.d
+sudo touch gunicorn.conf
+sudo nano gunicorn.conf
+
+///
+[program:gunicorn]
+directory=/home/ubuntu/Counter_BACKEND
+command=/home/ubuntu/env/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/Counter_BACKEND/app.sock core.wsgi:application  
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/gunicorn/gunicorn.err.log
+stdout_logfile=/var/log/gunicorn/gunicorn.out.log
+
+[group:guni]
+programs:gunicorn
+///
+
+sudo mkdir /var/log/gunicorn
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl status
