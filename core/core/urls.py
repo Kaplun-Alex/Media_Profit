@@ -1,10 +1,13 @@
 from django.urls import include, path
-from revenue.views import get_revenue
-from spend.views import get_spend
+from revenue.views import RevenueView
+from spend.views import SpendView
 from django.contrib import admin
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('revenue/', get_revenue),
-    path('spend/', get_spend),
+    path('revenue/', RevenueView.as_view()),
+    path('spend/', SpendView.as_view()),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
+

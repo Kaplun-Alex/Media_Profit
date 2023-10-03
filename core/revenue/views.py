@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.views import View
 from django.http import HttpResponse
 from .models import RevenueStatictic
 from django.db.models import Sum
@@ -11,9 +11,18 @@ from django.db.models import Sum
 з агрегованими сумами значень revenue
 та пов'язаними значеннями spend, impressions, clicks, conversion з моделі SpendStatistic.
 """
-def get_revenue(request):
 
-    revenue_res_transaction = RevenueStatictic.objects.filter().values('date', 'name').order_by('date', 'name').annotate(\
-        revevue_agregation=Sum('revenue'),)
-    print(revenue_res_transaction)
-    return HttpResponse("<h1>revenue_response<h1/>")
+class RevenueView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        revenue_res_transaction = RevenueStatictic.objects.all().select_related("spend").order_by("date", "name").\
+            annotate(revenueAgregation = Sum('revenue'))
+    
+        for i in revenue_res_transaction:
+            print(i.spend.impressions)
+        print(revenue_res_transaction.values_list())
+   
+        print(revenue_res_transaction)
+        
+        return HttpResponse("<h1>revenue_response<h1/>")
